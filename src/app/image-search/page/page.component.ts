@@ -13,7 +13,7 @@ export class PageComponent implements OnInit {
   currentPage: number = 1; // TODO
 
   constructor(
-    private search: SearchService,
+    public search: SearchService,
   ) { }
 
   ngOnInit(): void {

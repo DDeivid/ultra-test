@@ -3,6 +3,8 @@
   pagination
 </header>
 
-<section>
-  grid
+<section class="grid">
+  <ng-container *ngFor="let item of search.images$ | async">
+    <app-grid-item [item]="item"></app-grid-item>
+  </ng-container>
 </section>
