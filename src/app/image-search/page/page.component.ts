@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { SearchService } from './../search.service';
@@ -9,8 +9,10 @@ import { SearchService } from './../search.service';
   styleUrls: ['./page.component.scss']
 })
 export class PageComponent implements OnInit {
+  ITEMS_PER_PAGE: number = 9;
+  PAGINATION_MAX_SIZE: number = 6;
+
   searchInput: FormControl = new FormControl();
-  currentPage: number = 1; // TODO
 
   constructor(
     public search: SearchService,
@@ -18,6 +20,7 @@ export class PageComponent implements OnInit {
 
   ngOnInit(): void {
     this.watchSearchInput();
+    this.searchInput.setValue('Ultra');
   }
 
   /**
@@ -30,8 +33,27 @@ export class PageComponent implements OnInit {
         distinctUntilChanged(),
       )
       .subscribe(searchTerm => {
-        this.search.doSearch(searchTerm, this.currentPage);
+        this.search.doSearch(searchTerm, 1);
       })
   }
 
+  /**
+   * Request next page of images with same search value
+   */
+  changePage(newPage: number) {
+    this.search.doSearch(this.searchInput.value, newPage);
+  }
+}
+
+@Pipe({
+  name: 'currentPage',
+})
+export class CurrentPagePipe implements PipeTransform {
+
+  /** 
+   * Calculates current page based on the "offset" and how many images are rendered in the grid
+   */
+  transform(offset: number, perPage: number) {
+    return Math.floor(offset / perPage) + 1;
+  }
 }

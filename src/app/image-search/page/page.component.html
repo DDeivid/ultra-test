@@ -1,10 +1,32 @@
 <header>
   <input [formControl]="searchInput" class="form-control form-control-lg" type="text" placeholder="Search">
-  pagination
 </header>
 
-<section class="grid">
-  <ng-container *ngFor="let item of search.images$ | async">
-    <app-grid-item [item]="item"></app-grid-item>
-  </ng-container>
-</section>
+<ng-container *ngIf="(search.images$ | async) as images">
+  <section *ngIf="!images.length" class="no-results">
+    <div class="no-results__emoji">
+      😒
+    </div>
+    <div class="no-results__text">
+      No moving pictures here 
+    </div>
+  </section>
+  
+  <section *ngIf="images.length" class="grid">
+    <ng-container *ngFor="let item of search.images$ | async">
+      <app-grid-item [item]="item"></app-grid-item>
+    </ng-container>
+  </section>
+</ng-container>
+
+
+<footer *ngIf="(search.pagination$ | async) as pagination">
+  <ngb-pagination *ngIf="pagination.total_count"
+                  [page]="pagination.offset | currentPage: ITEMS_PER_PAGE"
+                  [pageSize]="ITEMS_PER_PAGE"
+                  [collectionSize]="pagination.total_count"
+                  [maxSize]="PAGINATION_MAX_SIZE"
+                  [rotate]="true"
+                  (pageChange)="changePage($event)">
+  </ngb-pagination>
+</footer>
