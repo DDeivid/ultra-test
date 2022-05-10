@@ -21,7 +21,10 @@
     "lib": [
       "es2020",
       "dom"
-    ]
+    ],
+    "plugins": [{
+      "name": "typescript-tslint-plugin"
+    }] 
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
