@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./grid-item.component.scss']
 })
 export class GridItemComponent {
-  @Input('item') item!: GiphyImage;
+  @Input() item!: GiphyImage;
 }
