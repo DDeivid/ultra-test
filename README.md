@@ -6,8 +6,11 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [x] Angular @latest - v13
 - [x] Bootstrap - https://ng-bootstrap.github.io/
 - [x] SCSS
-- [ ] Pre-commit clean task
-- [ ] Giphy project
+- [X] Pre-commit clean task
+- [X] Giphy project
+- - [X] Multi-tag search
+- - [X] 3x3 grid
+- - [X] Pagination
 - [ ] Unit tests
 
 ## Development server
